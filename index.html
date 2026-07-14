@@ -109,3 +109,226 @@
 
 </body>
 </html>
+!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUHYEON | Cyber Aurora</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="aurora"></div>
+
+<div class="hologram">
+
+    <div class="scan"></div>
+
+    <h1>HOLOGRAM ONLINE</h1>
+
+    <div class="code">
+        <p>> USER : <span>SUHYEON</span></p>
+        <p>> STATUS : <span>CODING</span></p>
+        <p>> WORLD : <span>CYBER AURORA</span></p>
+    </div>
+
+    <div class="hello">
+        안녕하시긔<br>
+        <strong>수현임</strong>
+    </div>
+
+    <div class="cursor"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+2) style.css
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body {
+    height:100vh;
+    overflow:hidden;
+    background:#020014;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:monospace;
+    color:white;
+}
+
+
+.aurora {
+    position:absolute;
+    width:120%;
+    height:120%;
+    background:
+    radial-gradient(circle at 20% 30%, #00ffff55, transparent 30%),
+    radial-gradient(circle at 80% 40%, #ff00ff55, transparent 35%),
+    radial-gradient(circle at 50% 80%, #00ff9955, transparent 30%);
+    filter:blur(60px);
+    animation:move 8s infinite alternate;
+}
+
+
+@keyframes move {
+    from {
+        transform:translate(-5%, -5%);
+    }
+
+    to {
+        transform:translate(5%, 5%);
+    }
+}
+
+
+.hologram {
+
+    position:relative;
+    width:420px;
+    padding:40px;
+
+    background:#ffffff10;
+
+    border:2px solid #00ffff;
+
+    box-shadow:
+    0 0 20px #00ffff,
+    inset 0 0 30px #ff00ff;
+
+    backdrop-filter:blur(15px);
+
+    text-align:center;
+
+    animation:float 3s infinite alternate;
+}
+
+
+@keyframes float {
+
+    from {
+        transform:translateY(-10px);
+    }
+
+    to {
+        transform:translateY(10px);
+    }
+
+}
+
+
+h1 {
+
+    color:#00ffff;
+    text-shadow:
+    0 0 10px #00ffff;
+
+    margin-bottom:25px;
+
+}
+
+
+.code {
+
+    text-align:left;
+    color:#00ff99;
+    line-height:2;
+}
+
+
+.code span {
+
+    color:#ff66ff;
+
+}
+
+
+.hello {
+
+    margin-top:30px;
+
+    font-size:30px;
+
+    color:white;
+
+    text-shadow:
+    0 0 15px #ff00ff;
+
+}
+
+
+.hello strong {
+
+    color:#00ffff;
+
+}
+
+
+.cursor {
+
+    width:12px;
+    height:25px;
+
+    background:#00ffff;
+
+    margin:20px auto 0;
+
+    animation:blink .7s infinite;
+
+}
+
+
+@keyframes blink {
+
+    50% {
+        opacity:0;
+    }
+
+}
+
+
+.scan {
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:3px;
+
+    background:#00ffff;
+
+    box-shadow:0 0 20px #00ffff;
+
+    animation:scan 2s infinite;
+
+}
+
+
+@keyframes scan {
+
+    from {
+        top:0;
+    }
+
+    to {
+        top:100%;
+    }
+
+}
+3) script.js
+const text = "안녕하시긔 수현임";
+
+console.log(
+    "%c" + text,
+    "color:#00ffff;font-size:20px;"
+);
