@@ -332,3 +332,192 @@ console.log(
     "%c" + text,
     "color:#00ffff;font-size:20px;"
 );
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Science Mission</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden;
+    background:
+    radial-gradient(circle at 70% 40%, #1b3cff 0%, transparent 18%),
+    linear-gradient(#02030f, #000);
+    color:white;
+    font-family: 'Orbitron', sans-serif;
+}
+
+
+/* 별 */
+.stars {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image:
+    radial-gradient(white 1px, transparent 1px);
+    background-size:40px 40px;
+    opacity:0.4;
+}
+
+
+/* 지구 */
+.earth {
+    position:absolute;
+    right:15%;
+    top:35%;
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    background:
+    radial-gradient(circle at 30% 30%, #7eeaff, #0055ff 45%, #001044);
+    box-shadow:
+    0 0 50px #00aaff,
+    0 0 100px #0055ff;
+}
+
+
+/* 달 */
+.moon {
+    position:absolute;
+    bottom:-120px;
+    left:50%;
+    transform:translateX(-50%);
+    width:500px;
+    height:250px;
+    background:#777;
+    border-radius:50% 50% 0 0;
+    box-shadow:
+    inset 0 20px 40px #aaa;
+}
+
+
+.container {
+    position:relative;
+    z-index:2;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+
+.quote {
+    font-size:2rem;
+    letter-spacing:4px;
+    text-shadow:
+    0 0 10px #00eaff;
+}
+
+
+button {
+    margin-top:50px;
+    padding:15px 60px;
+    background:transparent;
+    border:2px solid #00eaff;
+    color:#00eaff;
+    font-size:1.5rem;
+    cursor:pointer;
+    box-shadow:0 0 20px #00eaff;
+}
+
+
+button:hover {
+    background:#00eaff;
+    color:black;
+}
+
+
+#mission {
+    display:none;
+}
+
+
+h1 {
+    font-size:3rem;
+    color:#00eaff;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div class="stars"></div>
+
+<div class="earth"></div>
+
+<div class="moon"></div>
+
+
+<div class="container" id="main">
+
+<div class="quote">
+LOOK AGAIN AT THAT DOT.<br>
+THAT'S HERE.<br>
+THAT'S HOME.<br>
+THAT'S US.
+</div>
+
+
+<button onclick="startScience()">
+START
+</button>
+
+</div>
+
+
+
+<div class="container" id="mission">
+
+<h1>
+MISSION 01
+</h1>
+
+<h2>
+중학교 2학년 과학 1학기
+</h2>
+
+<p>
+우주의 작은 점에서 시작된 과학 탐험
+</p>
+
+</div>
+
+
+
+<audio id="music">
+<source src="audio.mp3" type="audio/mp3">
+</audio>
+
+
+
+<script>
+
+function startScience(){
+
+document.getElementById("music").play();
+
+document.getElementById("main").style.display="none";
+
+document.getElementById("mission").style.display="flex";
+
+}
+
+</script>
+
+
+</body>
+</html>
