@@ -7,93 +7,106 @@
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:"Orbitron","Pretendard",sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:
-    radial-gradient(circle at center,#06213b 0%,#020611 45%,#000 100%);
-    height:100vh;
-    overflow:hidden;
-    color:#00eaff;
+
+background:
+radial-gradient(circle,#06335a,#02040c 55%,#000);
+
+height:100vh;
+overflow:hidden;
+color:#00eaff;
+
 }
 
 
-/* 별빛 배경 */
-body::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:100%;
-    background-image:
-    radial-gradient(#00eaff 1px,transparent 1px);
-    background-size:60px 60px;
-    opacity:.25;
-    animation:space 20s linear infinite;
+/* 우주 데이터 */
+
+body:before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:
+radial-gradient(#00eaff 1px,transparent 1px);
+
+background-size:50px 50px;
+
+opacity:.25;
+
+animation:move 20s linear infinite;
+
 }
 
-@keyframes space{
-    from{transform:translateY(0);}
-    to{transform:translateY(60px);}
+@keyframes move{
+
+from{transform:translateY(0)}
+to{transform:translateY(50px)}
+
 }
 
 
-/* 시작 화면 */
+
+/* 시작 */
 
 #start{
 
 height:100vh;
 
 display:flex;
+
 align-items:center;
+
 justify-content:space-between;
 
-padding:0 140px;
+padding:0 130px;
+
+position:relative;
+
+z-index:2;
 
 }
 
 
-/* 문구 */
-
-.quote{
+.logo{
 
 font-size:42px;
 
 line-height:1.5;
 
-letter-spacing:2px;
-
 text-shadow:
-0 0 10px #00eaff,
-0 0 30px #008cff;
+0 0 15px cyan,
+0 0 40px blue;
 
 }
+
 
 
 /* 버튼 */
 
 button{
 
-background:transparent;
+background:none;
 
 border:2px solid #00eaff;
 
-color:#00eaff;
-
-padding:22px 55px;
+padding:20px 55px;
 
 font-size:28px;
+
+color:#00eaff;
 
 cursor:pointer;
 
 box-shadow:
-0 0 15px #00eaff,
-inset 0 0 15px #00eaff;
-
-transition:.3s;
+0 0 20px cyan;
 
 }
 
@@ -102,15 +115,13 @@ button:hover{
 
 background:#00eaff;
 
-color:#00121f;
-
-box-shadow:
-0 0 40px #00eaff;
+color:#001;
 
 }
 
 
-/* 부팅 화면 */
+
+/* 부팅 */
 
 #boot{
 
@@ -126,13 +137,21 @@ flex-direction:column;
 
 font-size:35px;
 
-text-shadow:
-0 0 20px cyan;
+text-shadow:0 0 20px cyan;
 
 }
 
 
-/* 게임 화면 */
+
+#percent{
+
+font-size:70px;
+
+}
+
+
+
+/* 게임 */
 
 #game{
 
@@ -149,76 +168,80 @@ flex-direction:column;
 }
 
 
+
 .title{
 
 font-size:50px;
 
-margin-bottom:35px;
-
-animation:blink 1s infinite;
-
-}
-
-
-@keyframes blink{
-
-50%{
-opacity:.4;
-}
+animation:flicker 1s infinite;
 
 }
 
 
 
-.hud{
+@keyframes flicker{
 
-width:650px;
+50%{opacity:.5}
 
-padding:40px;
+}
 
-border:2px solid #00eaff;
 
-background:rgba(0,20,50,.65);
+
+.panel{
+
+margin-top:30px;
+
+width:700px;
+
+padding:35px;
+
+border:2px solid cyan;
+
+background:rgba(0,30,60,.7);
 
 box-shadow:
 
-0 0 30px #00eaff,
+0 0 40px cyan,
 
-inset 0 0 25px #00eaff;
+inset 0 0 30px cyan;
 
 }
 
 
-.hud h2{
+
+.panel h2{
 
 font-size:35px;
 
-margin-bottom:25px;
-
 }
 
 
-.info{
+
+.data{
 
 font-size:22px;
 
 line-height:2;
 
+margin-top:20px;
+
 }
 
 
-.bar{
 
-height:18px;
+.exp{
 
-border:1px solid #00eaff;
+height:20px;
+
+border:1px solid cyan;
 
 margin:20px 0;
 
 }
 
 
-.progress{
+
+.fill{
 
 height:100%;
 
@@ -232,15 +255,24 @@ box-shadow:0 0 20px cyan;
 
 
 
-.unlock{
+.unit{
 
-margin-top:25px;
+margin-top:20px;
 
-color:#8fffff;
+font-size:23px;
 
-font-size:21px;
+line-height:1.8;
 
 }
+
+
+
+.lock{
+
+opacity:.5;
+
+}
+
 
 
 </style>
@@ -248,13 +280,13 @@ font-size:21px;
 </head>
 
 
+
 <body>
 
 
 <div id="start">
 
-
-<div class="quote">
+<div class="logo">
 
 우주는 질문하는 자에게<br>
 비밀을 공개한다.
@@ -262,7 +294,7 @@ font-size:21px;
 </div>
 
 
-<button onclick="startSystem()">
+<button onclick="bootSystem()">
 
 START SYSTEM
 
@@ -277,19 +309,16 @@ START SYSTEM
 <div id="boot">
 
 <div>
-SYSTEM BOOTING...
+SCIENCE CORE BOOTING...
 </div>
 
 <br>
 
-<div id="count">
-
+<div id="percent">
 0%
-
 </div>
 
 </div>
-
 
 
 
@@ -304,63 +333,65 @@ SCIENCE CORE ONLINE
 </div>
 
 
-<div class="hud">
+<div class="panel">
 
 
 <h2>
-SCIENCE MISSION
+PLAYER STATUS
 </h2>
 
 
-<div class="info">
+<div class="data">
 
 PLAYER : STUDENT<br>
 
-GRADE : MIDDLE SCHOOL 2<br><br>
+SCIENCE LEVEL : Lv.01<br>
+
+MISSION STATUS : ACTIVE
 
 
-CURRENT UNIT<br>
+<div class="exp">
 
-▶ 과학 중2 1단원
+<div class="fill"></div>
+
+</div>
+
+
+EXP : 100% COMPLETE
+
+
+
+<br><br>
+
+
+CURRENT MISSION<br>
+
+▶ 중학교 2학년 과학 1단원
+
 
 </div>
 
 
 
-<div class="bar">
+<div class="unit">
 
-<div class="progress"></div>
-
-</div>
+SCIENCE ARCHIVE<br><br>
 
 
-<div class="info">
+✔ 01 물질의 구성<br>
 
-MISSION COMPLETE<br>
+🔒 02 전기와 자기<br>
 
-DATA : 100%
+🔒 03 태양계와 별<br>
 
-</div>
-
-
-
-<div class="unlock">
-
-NEXT AREA UNLOCK<br><br>
-
-01 물질의 구성<br>
-
-02 전기와 자기<br>
-
-03 태양계와 별<br>
-
-04 화학 반응
-
-</div>
-
+🔒 04 화학 반응
 
 
 </div>
+
+
+</div>
+
 
 </div>
 
@@ -382,17 +413,20 @@ let gain=ctx.createGain();
 
 osc.type="sawtooth";
 
-osc.frequency.setValueAtTime(100,ctx.currentTime);
+osc.frequency.value=100;
+
+
+gain.gain.value=.15;
+
+
+osc.connect(gain);
+
+gain.connect(ctx.destination);
+
 
 osc.frequency.exponentialRampToValueAtTime(
 25,
 ctx.currentTime+2
-);
-
-
-gain.gain.setValueAtTime(
-0.2,
-ctx.currentTime
 );
 
 
@@ -402,21 +436,16 @@ ctx.currentTime+2
 );
 
 
-osc.connect(gain);
-
-gain.connect(ctx.destination);
-
-
 osc.start();
 
 osc.stop(ctx.currentTime+2);
+
 
 }
 
 
 
-
-function startSystem(){
+function bootSystem(){
 
 
 sound();
@@ -425,12 +454,7 @@ sound();
 document.getElementById("start").style.display="none";
 
 
-let boot=document.getElementById("boot");
-
-boot.style.display="flex";
-
-
-let count=document.getElementById("count");
+document.getElementById("boot").style.display="flex";
 
 
 let n=0;
@@ -441,7 +465,8 @@ let timer=setInterval(()=>{
 
 n+=10;
 
-count.innerHTML=n+"%";
+
+document.getElementById("percent").innerHTML=n+"%";
 
 
 if(n>=100){
@@ -452,7 +477,8 @@ clearInterval(timer);
 setTimeout(()=>{
 
 
-boot.style.display="none";
+document.getElementById("boot").style.display="none";
+
 
 document.getElementById("game").style.display="flex";
 
