@@ -1,1 +1,207 @@
-<!DOCTYPE html> <html lang="ko"> <head> <meta charset="UTF-8"> <title>NEON SCIENCE</title> <style> *{ margin:0; padding:0; box-sizing:border-box; } body{ height:100vh; overflow:hidden; background:#05000d; color:white; font-family:monospace; } /* 도시 */ .city{ position:absolute; width:100%; height:100%; background: linear-gradient( 180deg, #18002e, #020008 ); } /* 네온 안개 */ .city:after{ content:""; position:absolute; inset:0; background: radial-gradient( circle at 50% 80%, rgba(0,220,255,.35), transparent 40% ); } /* 건물 */ .building{ position:absolute; bottom:0; width:100px; background: linear-gradient( 90deg, #050014, #26005c, #050014 ); border-top: 3px solid #00eaff; box-shadow: 0 0 25px #00eaff; } /* HUD */ .hud{ position:absolute; top:30px; left:40px; color:#00eaff; font-size:18px; text-shadow: 0 0 15px #00eaff; } /* 제목 */ .logo{ position:absolute; left:70px; top:25%; font-size:65px; font-weight:bold; color:#eaffff; text-shadow: 0 0 10px #00eaff, 0 0 50px #ff00ff; } .logo small{ display:block; font-size:20px; letter-spacing:8px; color:#00eaff; } /* 메뉴 */ .menu{ position:absolute; right:15%; top:40%; width:300px; } button{ width:100%; height:70px; margin:15px 0; background: rgba(0,0,20,.5); border: 2px solid #00eaff; color:#00eaff; font-size:30px; cursor:pointer; box-shadow: 0 0 20px #00eaff; } button:hover{ background:#00eaff; color:black; } /* 접속 화면 */ .loading{ display:none; position:absolute; inset:0; background: rgba(0,0,20,.9); justify-content:center; align-items:center; flex-direction:column; font-size:35px; color:#00eaff; } /* 미션 */ .mission{ display:none; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:600px; padding:40px; background: rgba(0,10,40,.95); border: 2px solid #00eaff; box-shadow: 0 0 60px #00eaff; } .item{ padding:15px; margin:10px 0; border: 1px solid #00eaff; } </style> </head> <body> <div class="city" id="city"></div> <div class="hud"> SYSTEM : ONLINE<br> PLAYER : UNKNOWN<br> ZONE : CYBER SCIENCE </div> <div class="logo"> <small>NEURAL SCIENCE PROJECT</small> 미래는<br> 작은 것에서<br> 시작된다 </div> <div class="menu"> <button onclick="startGame()"> ▶ START </button> <button> CONTINUE </button> <button> SETTING </button> </div> <div class="loading" id="loading"> CONNECTING... <br><br> SCIENCE DATA ACCESS </div> <div class="mission" id="mission"> <h1> SCIENCE MISSION </h1> <br> <div class="item"> 01. 물질의 구성 </div> <div class="item"> 02. 전기와 자기 </div> <div class="item"> 03. 태양계와 별 </div> <div class="item"> 04. 식물과 에너지 </div> <div class="item"> 05. 생물의 다양성 </div> </div> <script> // 건물 생성 for(let i=0;i<20;i++){ let b=document.createElement("div"); b.className="building"; b.style.left=i*80+"px"; b.style.height= 100+Math.random()*250+"px"; document .getElementById("city") .appendChild(b); } // 시작 function startGame(){ document .getElementById("loading") .style.display="flex"; setTimeout(()=>{ document .getElementById("loading") .style.display="none"; document .querySelector(".menu") .style.display="none"; document .querySelector(".logo") .style.display="none"; document .getElementById("mission") .style.display="block"; },2500); } </script> </body> </html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Science Game</title>
+
+<style>
+body{
+    margin:0;
+    background:#000814;
+    color:#00d9ff;
+    font-family:Consolas,monospace;
+    overflow:hidden;
+}
+
+#start{
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:42px;
+    color:#fff;
+    cursor:pointer;
+    text-shadow:0 0 10px #00eaff,0 0 30px #00eaff;
+}
+
+#subtitle{
+    position:absolute;
+    top:53%;
+    left:50%;
+    transform:translateX(-50%);
+    color:#8ef6ff;
+}
+
+#panel{
+    display:none;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:700px;
+    background:rgba(0,20,40,.9);
+    border:2px solid #00eaff;
+    padding:25px;
+    box-shadow:0 0 30px #00eaff;
+}
+
+.glitch{
+    animation:glitch .15s 4;
+}
+
+@keyframes glitch{
+    0%{transform:translate(2px,-2px);}
+    25%{transform:translate(-2px,2px);}
+    50%{transform:translate(3px,1px);}
+    75%{transform:translate(-3px,-1px);}
+    100%{transform:translate(0,0);}
+}
+
+#loading{
+    margin-top:15px;
+}
+
+.bar{
+    width:100%;
+    height:20px;
+    background:#111;
+}
+
+.fill{
+    height:100%;
+    width:0%;
+    background:#00d9ff;
+}
+
+#line{
+    margin-top:20px;
+    white-space:pre-line;
+}
+</style>
+</head>
+
+<body>
+
+<div id="start">START</div>
+<div id="subtitle">System Online</div>
+
+<div id="panel">
+
+<h2>SYSTEM ONLINE</h2>
+
+<div>학년 : 중학교 2학년</div>
+<div>과목 : 과학</div>
+
+<br>
+
+<div>학습 데이터 로딩...</div>
+
+<div class="bar">
+<div class="fill"></div>
+</div>
+
+<div id="loading">0%</div>
+
+<div id="line"></div>
+
+</div>
+
+<audio id="hum" src="hum.mp3"></audio>
+<audio id="noise" src="glitch.mp3"></audio>
+
+<script>
+
+const units=[
+"01. 물질의 구성",
+"02. 전기와 자기",
+"03. 태양계",
+"04. 식물과 에너지",
+"05. 동물과 에너지",
+"06. 소화·순환·호흡·배설",
+"07. 힘과 운동",
+"08. 열과 우리 생활",
+"",
+"MISSION READY"
+];
+
+document.getElementById("start").onclick=function(){
+
+document.getElementById("hum").play();
+
+this.style.display="none";
+subtitle.style.display="none";
+
+setTimeout(()=>{
+
+document.getElementById("hum").volume=.2;
+
+},1500);
+
+setTimeout(()=>{
+
+document.getElementById("noise").play();
+
+document.body.classList.add("glitch");
+
+document.getElementById("panel").style.display="block";
+
+loading();
+
+},2200);
+
+};
+
+function loading(){
+
+let p=0;
+
+let bar=document.querySelector(".fill");
+
+let txt=document.getElementById("loading");
+
+let t=setInterval(()=>{
+
+p+=2;
+
+bar.style.width=p+"%";
+
+txt.innerHTML=p+"%";
+
+if(p>=100){
+
+clearInterval(t);
+
+showUnits();
+
+}
+
+},40);
+
+}
+
+function showUnits(){
+
+let i=0;
+
+let area=document.getElementById("line");
+
+let t=setInterval(()=>{
+
+area.innerHTML+=units[i]+"<br>";
+
+i++;
+
+if(i==units.length){
+
+clearInterval(t);
+
+}
+
+},450);
+
+}
+
+</script>
+
+</body>
+</html>
