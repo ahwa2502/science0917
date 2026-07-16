@@ -8,200 +8,229 @@
 body{
     margin:0;
     background:#000814;
-    color:#00d9ff;
-    font-family:Consolas,monospace;
+    color:#00eaff;
+    font-family:Arial, sans-serif;
     overflow:hidden;
 }
 
+/* 시작 화면 */
 #start{
-    position:absolute;
-    top:45%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    font-size:42px;
-    color:#fff;
+    height:100vh;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 120px;
+}
+
+/* 문구 */
+.text{
+    font-size:55px;
+    font-weight:bold;
+    text-shadow:
+    0 0 10px #00eaff,
+    0 0 30px #00eaff;
+}
+
+/* 버튼 */
+button{
+    background:none;
+    border:3px solid #00eaff;
+    color:#00eaff;
+    padding:25px 70px;
+    font-size:30px;
     cursor:pointer;
-    text-shadow:0 0 10px #00eaff,0 0 30px #00eaff;
+    box-shadow:
+    0 0 20px #00eaff;
 }
 
-#subtitle{
-    position:absolute;
-    top:53%;
-    left:50%;
-    transform:translateX(-50%);
-    color:#8ef6ff;
+button:hover{
+    background:#00eaff;
+    color:#00111f;
 }
 
-#panel{
+
+/* 게임 상태창 */
+#game{
     display:none;
-    position:absolute;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    width:700px;
-    background:rgba(0,20,40,.9);
-    border:2px solid #00eaff;
-    padding:25px;
-    box-shadow:0 0 30px #00eaff;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
 }
 
-.glitch{
-    animation:glitch .15s 4;
+.system{
+    font-size:50px;
+    animation:blink 1s infinite;
+    text-shadow:
+    0 0 20px cyan;
 }
 
-@keyframes glitch{
-    0%{transform:translate(2px,-2px);}
-    25%{transform:translate(-2px,2px);}
-    50%{transform:translate(3px,1px);}
-    75%{transform:translate(-3px,-1px);}
-    100%{transform:translate(0,0);}
+.box{
+
+    margin-top:30px;
+    width:600px;
+    padding:40px;
+
+    border:3px solid #00eaff;
+
+    background:rgba(0,150,255,.1);
+
+    box-shadow:
+    0 0 30px #00eaff,
+    inset 0 0 30px #00eaff;
+
+    font-size:25px;
+
 }
 
-#loading{
-    margin-top:15px;
+
+@keyframes blink{
+    50%{
+        opacity:.4;
+    }
+}
+
+.loading{
+
+    height:20px;
+    border:2px solid cyan;
+    margin-top:20px;
+
 }
 
 .bar{
-    width:100%;
-    height:20px;
-    background:#111;
-}
 
-.fill{
-    height:100%;
     width:0%;
-    background:#00d9ff;
+    height:100%;
+    background:#00eaff;
+    transition:2s;
+
 }
 
-#line{
-    margin-top:20px;
-    white-space:pre-line;
-}
 </style>
+
 </head>
+
 
 <body>
 
-<div id="start">START</div>
-<div id="subtitle">System Online</div>
 
-<div id="panel">
+<div id="start">
 
-<h2>SYSTEM ONLINE</h2>
-
-<div>학년 : 중학교 2학년</div>
-<div>과목 : 과학</div>
-
-<br>
-
-<div>학습 데이터 로딩...</div>
-
-<div class="bar">
-<div class="fill"></div>
+<div class="text">
+작은 것들로부터<br>
+과학은 시작된다.
 </div>
 
-<div id="loading">0%</div>
 
-<div id="line"></div>
+<button onclick="startGame()">
+시작하기
+</button>
+
 
 </div>
 
-<audio id="hum" src="hum.mp3"></audio>
-<audio id="noise" src="glitch.mp3"></audio>
+
+
+<div id="game">
+
+<div class="system">
+SYSTEM ONLINE
+</div>
+
+
+<div class="box">
+
+<p>PLAYER : 학생</p>
+
+<p>LEVEL : 중학교 2학년</p>
+
+<hr>
+
+<h2>과학 중2 2단원</h2>
+
+
+<p>
+MISSION : READY
+</p>
+
+
+<p>
+EXP : 0 / 100
+</p>
+
+
+<div class="loading">
+<div class="bar" id="bar"></div>
+</div>
+
+
+</div>
+
+
+</div>
+
+
 
 <script>
 
-const units=[
-"01. 물질의 구성",
-"02. 전기와 자기",
-"03. 태양계",
-"04. 식물과 에너지",
-"05. 동물과 에너지",
-"06. 소화·순환·호흡·배설",
-"07. 힘과 운동",
-"08. 열과 우리 생활",
-"",
-"MISSION READY"
-];
+function startGame(){
 
-document.getElementById("start").onclick=function(){
+    // 웅---- 효과음
+    let audio = new AudioContext();
 
-document.getElementById("hum").play();
+    let osc = audio.createOscillator();
+    let gain = audio.createGain();
 
-this.style.display="none";
-subtitle.style.display="none";
 
-setTimeout(()=>{
+    osc.frequency.value = 80;
+    gain.gain.value = 0.15;
 
-document.getElementById("hum").volume=.2;
 
-},1500);
+    osc.connect(gain);
+    gain.connect(audio.destination);
 
-setTimeout(()=>{
 
-document.getElementById("noise").play();
+    osc.start();
 
-document.body.classList.add("glitch");
 
-document.getElementById("panel").style.display="block";
+    osc.frequency.exponentialRampToValueAtTime(
+        30,
+        audio.currentTime+1.5
+    );
 
-loading();
 
-},2200);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audio.currentTime+1.5
+    );
 
-};
 
-function loading(){
+    osc.stop(audio.currentTime+1.5);
 
-let p=0;
 
-let bar=document.querySelector(".fill");
 
-let txt=document.getElementById("loading");
+    // 화면 전환
 
-let t=setInterval(()=>{
+    document.getElementById("start")
+    .style.display="none";
 
-p+=2;
 
-bar.style.width=p+"%";
+    document.getElementById("game")
+    .style.display="flex";
 
-txt.innerHTML=p+"%";
 
-if(p>=100){
+    setTimeout(()=>{
 
-clearInterval(t);
+        document.getElementById("bar")
+        .style.width="100%";
 
-showUnits();
-
-}
-
-},40);
-
-}
-
-function showUnits(){
-
-let i=0;
-
-let area=document.getElementById("line");
-
-let t=setInterval(()=>{
-
-area.innerHTML+=units[i]+"<br>";
-
-i++;
-
-if(i==units.length){
-
-clearInterval(t);
-
-}
-
-},450);
+    },300);
 
 }
 
 </script>
+
 
 </body>
 </html>
