@@ -15,17 +15,23 @@ font-family:Arial,sans-serif;
 
 body{
 
-background:
-radial-gradient(circle,#06335a,#02040c 55%,#000);
-
 height:100vh;
 overflow:hidden;
+
+background:
+linear-gradient(
+135deg,
+#02030b,
+#00152c,
+#000
+);
+
 color:#00eaff;
 
 }
 
 
-/* 우주 데이터 */
+/* 네온 도시 느낌 */
 
 body:before{
 
@@ -35,28 +41,29 @@ position:absolute;
 inset:0;
 
 background:
-radial-gradient(#00eaff 1px,transparent 1px);
 
-background-size:50px 50px;
+linear-gradient(
+90deg,
+transparent 90%,
+rgba(0,234,255,.15)
+),
 
-opacity:.25;
+linear-gradient(
+0deg,
+transparent 90%,
+rgba(0,234,255,.1)
+);
 
-animation:move 20s linear infinite;
+background-size:80px 80px;
+
+opacity:.3;
 
 }
 
-@keyframes move{
 
-from{transform:translateY(0)}
-to{transform:translateY(50px)}
+/* 시작 화면 */
 
-}
-
-
-
-/* 시작 */
-
-#start{
+#intro{
 
 height:100vh;
 
@@ -64,20 +71,20 @@ display:flex;
 
 align-items:center;
 
-justify-content:space-between;
+justify-content:center;
 
-padding:0 130px;
+flex-direction:column;
 
 position:relative;
-
-z-index:2;
 
 }
 
 
-.logo{
+.title{
 
-font-size:42px;
+font-size:48px;
+
+text-align:center;
 
 line-height:1.5;
 
@@ -89,24 +96,56 @@ text-shadow:
 
 
 
-/* 버튼 */
+/* 연구실 패널 */
+
+.lab{
+
+margin-top:45px;
+
+padding:25px 45px;
+
+border:1px solid #00eaff;
+
+background:rgba(0,40,80,.35);
+
+box-shadow:
+
+0 0 25px cyan,
+
+inset 0 0 20px cyan;
+
+text-align:center;
+
+}
+
+
+.lab p{
+
+font-size:20px;
+
+line-height:2;
+
+}
+
+
 
 button{
 
-background:none;
+margin-top:35px;
+
+padding:18px 55px;
+
+background:transparent;
 
 border:2px solid #00eaff;
 
-padding:20px 55px;
-
-font-size:28px;
-
 color:#00eaff;
+
+font-size:25px;
 
 cursor:pointer;
 
-box-shadow:
-0 0 20px cyan;
+box-shadow:0 0 20px cyan;
 
 }
 
@@ -137,15 +176,14 @@ flex-direction:column;
 
 font-size:35px;
 
-text-shadow:0 0 20px cyan;
-
 }
-
 
 
 #percent{
 
 font-size:70px;
+
+margin-top:20px;
 
 }
 
@@ -168,28 +206,27 @@ flex-direction:column;
 }
 
 
+.system{
 
-.title{
+font-size:45px;
 
-font-size:50px;
+text-shadow:0 0 30px cyan;
 
-animation:flicker 1s infinite;
-
-}
-
-
-
-@keyframes flicker{
-
-50%{opacity:.5}
+animation:blink 1s infinite;
 
 }
 
+
+@keyframes blink{
+
+50%{opacity:.5;}
+
+}
 
 
 .panel{
 
-margin-top:30px;
+margin-top:35px;
 
 width:700px;
 
@@ -211,7 +248,7 @@ inset 0 0 30px cyan;
 
 .panel h2{
 
-font-size:35px;
+font-size:32px;
 
 }
 
@@ -219,19 +256,18 @@ font-size:35px;
 
 .data{
 
+margin-top:25px;
+
 font-size:22px;
 
 line-height:2;
 
-margin-top:20px;
-
 }
 
 
+.progress{
 
-.exp{
-
-height:20px;
+height:18px;
 
 border:1px solid cyan;
 
@@ -240,12 +276,11 @@ margin:20px 0;
 }
 
 
-
 .fill{
 
-height:100%;
-
 width:100%;
+
+height:100%;
 
 background:#00eaff;
 
@@ -255,24 +290,15 @@ box-shadow:0 0 20px cyan;
 
 
 
-.unit{
+.units{
 
-margin-top:20px;
-
-font-size:23px;
+margin-top:25px;
 
 line-height:1.8;
 
-}
-
-
-
-.lock{
-
-opacity:.5;
+font-size:21px;
 
 }
-
 
 
 </style>
@@ -280,13 +306,13 @@ opacity:.5;
 </head>
 
 
-
 <body>
 
 
-<div id="start">
+<div id="intro">
 
-<div class="logo">
+
+<div class="title">
 
 우주는 질문하는 자에게<br>
 비밀을 공개한다.
@@ -294,7 +320,26 @@ opacity:.5;
 </div>
 
 
-<button onclick="bootSystem()">
+
+<div class="lab">
+
+<p>
+접속자를 확인했습니다.
+</p>
+
+<p>
+새로운 탐구자의 여정을 시작하십시오.
+</p>
+
+<p>
+SCIENCE CORE LAB
+</p>
+
+</div>
+
+
+
+<button onclick="startSystem()">
 
 START SYSTEM
 
@@ -306,19 +351,23 @@ START SYSTEM
 
 
 
+
 <div id="boot">
 
+
 <div>
-SCIENCE CORE BOOTING...
+SCIENCE CORE INITIALIZING...
 </div>
 
-<br>
 
 <div id="percent">
 0%
 </div>
 
+
 </div>
+
+
 
 
 
@@ -326,65 +375,61 @@ SCIENCE CORE BOOTING...
 <div id="game">
 
 
-<div class="title">
+<div class="system">
 
 SCIENCE CORE ONLINE
 
 </div>
 
 
+
 <div class="panel">
 
 
 <h2>
-PLAYER STATUS
+RESEARCHER STATUS
 </h2>
 
 
 <div class="data">
 
-PLAYER : STUDENT<br>
 
-SCIENCE LEVEL : Lv.01<br>
+USER : STUDENT<br>
 
-MISSION STATUS : ACTIVE
+RANK : RESEARCHER Lv.01<br><br>
 
 
-<div class="exp">
+CURRENT MISSION<br>
+
+중학교 2학년 과학 1학기
+
+
+<div class="progress">
 
 <div class="fill"></div>
 
 </div>
 
 
-EXP : 100% COMPLETE
-
-
-
-<br><br>
-
-
-CURRENT MISSION<br>
-
-▶ 중학교 2학년 과학 1단원
+DATA SYNC : 100%
 
 
 </div>
 
 
 
-<div class="unit">
+
+<div class="units">
 
 SCIENCE ARCHIVE<br><br>
 
+01 물질의 구성<br>
 
-✔ 01 물질의 구성<br>
+02 전기와 자기<br>
 
-🔒 02 전기와 자기<br>
+03 태양계<br>
 
-🔒 03 태양계와 별<br>
-
-🔒 04 화학 반응
+04 식물과 에너지
 
 
 </div>
@@ -402,7 +447,7 @@ SCIENCE ARCHIVE<br><br>
 <script>
 
 
-function sound(){
+function bootSound(){
 
 let ctx=new AudioContext();
 
@@ -425,7 +470,7 @@ gain.connect(ctx.destination);
 
 
 osc.frequency.exponentialRampToValueAtTime(
-25,
+30,
 ctx.currentTime+2
 );
 
@@ -440,18 +485,18 @@ osc.start();
 
 osc.stop(ctx.currentTime+2);
 
-
 }
 
 
 
-function bootSystem(){
+
+function startSystem(){
 
 
-sound();
+bootSound();
 
 
-document.getElementById("start").style.display="none";
+document.getElementById("intro").style.display="none";
 
 
 document.getElementById("boot").style.display="flex";
@@ -464,7 +509,6 @@ let timer=setInterval(()=>{
 
 
 n+=10;
-
 
 document.getElementById("percent").innerHTML=n+"%";
 
@@ -479,17 +523,16 @@ setTimeout(()=>{
 
 document.getElementById("boot").style.display="none";
 
-
 document.getElementById("game").style.display="flex";
 
 
-},700);
+},1000);
 
 
 }
 
 
-},150);
+},300);
 
 
 }
